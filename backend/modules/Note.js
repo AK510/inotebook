@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const NotesSchema = new Schema({
     user:{
-        //similar to foreign key
+        //similar to foreign key => to know of which user this particular note is
         type: mongoose.Schema.Types.ObjectId,
         ref : 'user'
     },
