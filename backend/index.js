@@ -7,12 +7,15 @@
 const connectToMongo = require('./db');
 const express = require('express');
 
+var cors = require('cors')
 //method of DB
 connectToMongo();
 
 const app = express()
 const port = 5000
 
+//allows user to make api req from browser
+app.use(cors())
 app.use(express.json())
 
 app.get('/', (req, res) => {
