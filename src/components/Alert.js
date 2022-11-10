@@ -1,11 +1,22 @@
 import React from 'react'
 
-const Alert = (props) => {
+export default function Alert(props) {
+
+    const toUpper = (word) => {
+      if(word === "danger"){
+        word = "error"
+      }
+      let str = word.toLowerCase();
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
   return (
-    <div className="alert alert-primary" role="alert">
-        {props.message}
+
+    <div style={{height : '50px'}}>
+    {props.alert && <div className= {`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
+        <strong>{toUpper(props.alert.type)} : {props.alert.messege}</strong>
+        {/* <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> */}
+    </div>}
     </div>
   )
 }
-
-export default Alert

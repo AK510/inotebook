@@ -9,19 +9,39 @@ import {
 } from "react-router-dom";
 import NoteState from './context/notes/NoteState';
 import Alert from './components/Alert';
+import Login from './components/Login';
+import { useState } from 'react';
+import Signup from './components/Signup';
 
 function App() {
+
+  const [alert, setalert] = useState(null)
+
+  const showAlert = (messege, type) =>{
+    setalert({
+      messege : messege,
+      type : type
+      }
+    )
+
+    setTimeout(() => {
+      setalert(null)
+    }, 1500);
+  }
+  
   return (
     <>
       {/* to user states directly rather than passing it to components hierarchy context api is used. Very useful in complex projects useContext hook*/}
       <NoteState>
         <Router>
           <Navbar/>
-          <Alert message = "This is a alert"/>
+          <Alert alert = {alert}/>
           <div className="container">
             <Routes>
-              <Route exact path="/" element={<Home/>} /> 
+              <Route exact path="/" element={<Home showAlert={showAlert}/>} /> 
               <Route exact path="/about" element={<About/>} />  
+              <Route exact path="/login" element={<Login showAlert={showAlert}/>} />  
+              <Route exact path="/signup" element={<Signup showAlert={showAlert}/>} />  
             </Routes>
           </div>
         </Router>

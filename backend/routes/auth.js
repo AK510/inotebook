@@ -25,15 +25,17 @@ router.post(
   ],
 
   async (req, res) => {
+
+    let success = false;
     //if there are errors, return bad request.
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({success, errors: errors.array() });
     }
 
     try {
       //Check if user with same email exist already. Await to make JS wait to complete search in databse.
-      let user = await User.findOne({ email: req.body.email });
+      let user = await User.findOne({success, email: req.body.email });
 
       if (user) {
         return res
@@ -57,9 +59,10 @@ router.post(
       };
 
       const authtoken = jwt.sign(data, JWT_SECRET);
+      success = true;
 
       //send authtoken to make future authorization easy
-      res.json({ authtoken });
+      res.json({success, authtoken });
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Interval Server Error!");
@@ -83,24 +86,27 @@ router.post(
     }
 
     const { email, password } = req.body;
+    let success = false;
 
     try {
       let user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json({ error: "Incorrect email/password" });
+        return res.status(400).json({success, error: "Incorrect email/password" });
       }
 
       const passWordCompare = await bcrypt.compare(password, user.password);
       if (!passWordCompare) {
-        return res.status(400).json({ error: "Incorrect email/password" });
+        return res.status(400).json({success, error: "Incorrect email/password" });
       }
 
       const data = {
         user: { id: user.id },
       };
 
+      success = true;
       const authtoken = jwt.sign(data, JWT_SECRET);
-      res.json({ authtoken });
+      res.json({success, authtoken });
+
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Interval Server Error!");
