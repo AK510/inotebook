@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
+import './../CSS/login.css';
 
 const Login = (props) => {
 
@@ -38,19 +39,40 @@ const Login = (props) => {
     }
 
     return (
-    <div>
-        <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email address</label>
-                <input type="email" className="form-control" id="email" onChange={onChange} value={credentials.email} name="email" aria-describedby="emailHelp"/>
-                <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+    <div className="container-fluid ps-md-0">
+        <div className="row g-0">
+            <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+            <div className="col-md-8 col-lg-6">
+            <div className="login d-flex align-items-center py-5">
+                <div className="container">
+                <div className="row">
+                    <div className="col-md-9 col-lg-8 mx-auto">
+                    <h3 className="login-heading mb-4">Welcome back!</h3>
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-floating mb-3">
+                        <input type="email" className="form-control" id="email" onChange={onChange} value={credentials.email} name="email" placeholder="name@example.com"/>
+                        <label htmlFor="email">Email address</label>
+                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div className="form-floating mb-3">
+                        <input type="password" className="form-control" id="password" onChange={onChange} value={credentials.password} name='password' placeholder="Password"/>
+                        <label htmlFor="password">Password</label>
+                        </div>
+
+                        <div className="d-grid">
+                        <button className="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
+                        <div className="text-center">
+                            <a className="small" href="#">Forgot password?</a>
+                        </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
             </div>
-            <div className="mb-3">
-                <label htmlFor="password" className="form-label">Password</label>
-                <input type="password" className="form-control" id="password" onChange={onChange} value={credentials.password} name='password'/>
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
+        </div>
     </div>
     )
 }
